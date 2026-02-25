@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Tech Daily - 2026年02月26日</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#7C3AED',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 基础样式 */
+        body {
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            background: #F8FAFC;
+        }
+        
+        /* 渐变文字 */
+        .gradient-text {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* 背景装饰球 */
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            pointer-events: none;
+        }
+        
+        /* 卡片阴影效果 - Corporate Trust 风格 */
+        .card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(79, 70, 229, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card-shadow:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px -5px rgba(79, 70, 229, 0.2), 0 10px 20px -5px rgba(79, 70, 229, 0.1);
+        }
+        
+        /* 来源标签颜色 */
+        .badge-hackernews { background: linear-gradient(135deg, #ff6600, #ff8533); }
+        .badge-github { background: linear-gradient(135deg, #24292e, #586069); }
+        .badge-techcrunch { background: linear-gradient(135deg, #0f9d58, #34a853); }
+        .badge-jiqizhixin { background: linear-gradient(135deg, #1890ff, #69c0ff); }
+        .badge-qbitai { background: linear-gradient(135deg, #722ed1, #b37feb); }
+        .badge-infoq { background: linear-gradient(135deg, #ff6b6b, #ffa39e); }
+        .badge-solidot { background: linear-gradient(135deg, #4ecdc4, #95e1d3); }
+        .badge-36kr { background: linear-gradient(135deg, #4285f4, #34a853); }
+        .badge-ifanr { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+        .badge-sspai { background: linear-gradient(135deg, #d42626, #b91c1c); }
+        .badge-default { background: linear-gradient(135deg, #6c5ce7, #a29bfe); }
+        
+        /* 关键词标签 */
+        .keyword-tag {
+            background: rgba(79, 70, 229, 0.08);
+            color: #4F46E5;
+            transition: all 0.2s ease;
+        }
+        
+        .keyword-tag:hover {
+            background: rgba(79, 70, 229, 0.15);
+        }
+        
+        /* 热度指示器 */
+        .score-hot { color: #ef4444; }
+        .score-warm { color: #f59e0b; }
+        .score-normal { color: #9ca3af; }
+        
+        /* 板块标题装饰 */
+        .section-title-line {
+            background: linear-gradient(90deg, #4F46E5 0%, #7C3AED 50%, transparent 100%);
+            height: 3px;
+            border-radius: 2px;
+        }
+        
+        /* 平滑滚动 */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* 动画 */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        
+        /* 统计卡片光晕 */
+        .stat-glow {
+            box-shadow: 0 0 30px rgba(79, 70, 229, 0.15);
+        }
+        
+        /* 可展开统计卡片 */
+        .stat-card-expandable {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card-expandable:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(79, 70, 229, 0.2);
+        }
+        
+        .stat-card-expandable.active {
+            border-color: #4F46E5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+        
+        .expand-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, opacity 0.3s ease, padding 0.3s ease;
+            opacity: 0;
+        }
+        
+        .expand-content.show {
+            max-height: 500px;
+            opacity: 1;
+            padding-top: 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .expand-icon {
+            transition: transform 0.3s ease;
+        }
+        
+        .expand-icon.rotate {
+            transform: rotate(180deg);
+        }
+        
+        .source-list, .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .source-tag, .category-tag {
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            color: white;
+            padding: 0.375rem 0.875rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(79, 70, 229, 0.2);
+            transition: all 0.2s ease;
+        }
+        
+        .source-tag:hover, .category-tag:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+        
+        .click-hint {
+            font-size: 0.7rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            opacity: 0.7;
+        }
+        
+        /* 热门5条样式 */
+        .top5-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .top5-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .top5-item:hover {
+            background: rgba(79, 70, 229, 0.05);
+        }
+        
+        .top5-rank {
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: white;
+            background: linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%);
+            flex-shrink: 0;
+        }
+        
+        .top5-item:nth-child(1) .top5-rank {
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
+        }
+        
+        .top5-item:nth-child(2) .top5-rank {
+            background: linear-gradient(135deg, #f97316 0%, #f59e0b 100%);
+        }
+        
+        .top5-item:nth-child(3) .top5-rank {
+            background: linear-gradient(135deg, #f59e0b 0%, #eab308 100%);
+        }
+        
+        .top5-title {
+            font-size: 0.875rem;
+            color: #334155;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden">
+    <!-- 背景装饰球 -->
+    <div class="blob bg-indigo-400 w-96 h-96 -top-20 -left-20"></div>
+    <div class="blob bg-violet-400 w-80 h-80 top-40 right-0"></div>
+    <div class="blob bg-purple-400 w-64 h-64 bottom-40 left-20"></div>
+    
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <!-- Header -->
+        <header class="text-center mb-16 animate-fade-in">
+            <div class="inline-flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full shadow-sm mb-6">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-sm text-slate-600 font-medium">今日已更新</span>
+            </div>
+            
+            <h1 class="text-5xl sm:text-6xl font-extrabold mb-4 tracking-tight">
+                <span class="text-slate-900">AI Tech</span>
+                <span class="gradient-text">Daily</span>
+            </h1>
+            
+            <p class="text-xl text-slate-500 font-medium mb-2">2026年02月26日</p>
+            <p class="text-slate-400">智能筛选 · 精准分类 · 实时热点</p>
+        </header>
+        
+        <!-- Stats -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 animate-fade-in items-start" style="animation-delay: 0.1s">
+            <!-- 精选热点 - 可展开 -->
+            <div class="bg-white rounded-2xl p-6 stat-glow border border-slate-100 stat-card-expandable" onclick="toggleExpand('hotspot')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-1">精选热点</p>
+                        <p class="text-4xl font-bold text-slate-900">50</p>
+                        <div class="click-hint">
+                            <span>点击查看详情</span>
+                            <svg class="w-3 h-3 expand-icon" id="hotspot-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z"/></svg>
+                    </div>
+                </div>
+                <div class="expand-content" id="hotspot-content">
+                    <p class="text-sm text-slate-500 mb-3">今日最热门的 5 条精选：</p>
+                    <div class="top5-list">
+                        <div class="top5-item">
+                <span class="top5-rank">1</span>
+                <span class="top5-title">IDF killed Gaza aid workers at point blank range in 2025 massacre: Report</span>
+            </div><div class="top5-item">
+                <span class="top5-rank">2</span>
+                <span class="top5-title">AI 总是在战争模拟游戏中推荐核打击</span>
+            </div><div class="top5-item">
+                <span class="top5-rank">3</span>
+                <span class="top5-title">8点1氪丨凌晨3点候补成功致千元车票作废，12306回应；油价迎来年内第三次上涨；大疆起诉美国联邦通信委员会</span>
+            </div><div class="top5-item">
+                <span class="top5-rank">4</span>
+                <span class="top5-title">[AI] CraftyGeezer/Kalshi-Polymarket-Ai-bot: None</span>
+            </div><div class="top5-item">
+                <span class="top5-rank">5</span>
+                <span class="top5-title">[AI] kevinho/clawfeed: ClawFeed — AI-powered news digest with structured summaries from Twitter/RSS feeds and web dashboard</span>
+            </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据来源 - 可展开 -->
+            <div class="bg-white rounded-2xl p-6 stat-glow border border-slate-100 stat-card-expandable" onclick="toggleExpand('sources')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-1">数据来源</p>
+                        <p class="text-4xl font-bold text-slate-900">9</p>
+                        <div class="click-hint">
+                            <span>点击查看详情</span>
+                            <svg class="w-3 h-3 expand-icon" id="sources-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-violet-500 to-purple-600 flex items-center justify-center text-white shadow-lg shadow-violet-200">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg>
+                    </div>
+                </div>
+                <div class="expand-content" id="sources-content">
+                    <p class="text-sm text-slate-500 mb-3">本报告数据来自以下平台：</p>
+                    <div class="source-list">
+                        <span class="source-tag">36氪</span><span class="source-tag">GitHub Trending</span><span class="source-tag">Hacker News</span><span class="source-tag">InfoQ</span><span class="source-tag">Solidot</span><span class="source-tag">TechCrunch</span><span class="source-tag">机器之心</span><span class="source-tag">爱范儿</span><span class="source-tag">量子位</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 主题板块 - 可展开 -->
+            <div class="bg-white rounded-2xl p-6 stat-glow border border-slate-100 stat-card-expandable" onclick="toggleExpand('categories')">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-semibold text-slate-500 mb-1">主题板块</p>
+                        <p class="text-4xl font-bold text-slate-900">5</p>
+                        <div class="click-hint">
+                            <span>点击查看详情</span>
+                            <svg class="w-3 h-3 expand-icon" id="categories-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="w-14 h-14 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white shadow-lg shadow-purple-200">
+                        <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z"/></svg>
+                    </div>
+                </div>
+                <div class="expand-content" id="categories-content">
+                    <p class="text-sm text-slate-500 mb-3">新闻已自动分类为以下板块：</p>
+                    <div class="category-list">
+                        <span class="category-tag">AI综合 (29)</span><span class="category-tag">开源项目 (10)</span><span class="category-tag">大模型 (6)</span><span class="category-tag">融资动态 (4)</span><span class="category-tag">自然语言处理 (1)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function toggleExpand(id) {
+                const content = document.getElementById(id + '-content');
+                const icon = document.getElementById(id + '-icon');
+                const card = content.closest('.stat-card-expandable');
+                
+                // 切换展开状态
+                const isExpanded = content.classList.contains('show');
+                
+                // 先关闭所有其他的展开项
+                document.querySelectorAll('.expand-content.show').forEach(el => {
+                    if (el !== content) {
+                        el.classList.remove('show');
+                        el.closest('.stat-card-expandable').classList.remove('active');
+                    }
+                });
+                document.querySelectorAll('.expand-icon.rotate').forEach(el => {
+                    if (el !== icon) {
+                        el.classList.remove('rotate');
+                    }
+                });
+                
+                // 切换当前项
+                content.classList.toggle('show');
+                icon.classList.toggle('rotate');
+                card.classList.toggle('active');
+            }
+        </script>
+        
+        <!-- Filter Info -->
+        <div class="bg-white/70 backdrop-blur-md rounded-2xl p-6 mb-12 border border-slate-200/60 animate-fade-in" style="animation-delay: 0.2s">
+            <div class="flex items-center gap-2 mb-5">
+                <div class="text-indigo-600"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/></svg></div>
+                <span class="font-semibold text-slate-800">筛选标准</span>
+                <span class="text-xs text-slate-400 ml-2">我们如何从海量信息中精选优质内容</span>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="bg-white/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                        <span class="font-semibold text-slate-700 text-sm">时间窗口</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">只保留过去 48 小时内发布的新闻，确保内容新鲜度</p>
+                </div>
+                <div class="bg-white/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-violet-500"></span>
+                        <span class="font-semibold text-slate-700 text-sm">相关性评分</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">基于 AI 关键词权重计算，≥3 分表示内容与 AI/科技领域高度相关</p>
+                </div>
+                <div class="bg-white/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+                        <span class="font-semibold text-slate-700 text-sm">热度阈值</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">Hacker News 点赞 ≥50、GitHub Star ≥10，筛选社区认可的内容</p>
+                </div>
+                <div class="bg-white/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-pink-500"></span>
+                        <span class="font-semibold text-slate-700 text-sm">智能去重</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">标题相似度超过 80% 视为重复新闻，自动过滤避免信息冗余</p>
+                </div>
+                <div class="bg-white/80 rounded-xl p-4 border border-slate-100 hover:shadow-md transition-shadow">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                        <span class="font-semibold text-slate-700 text-sm">质量过滤</span>
+                    </div>
+                    <p class="text-xs text-slate-500 leading-relaxed">屏蔽招聘广告、垃圾营销、低质量站点，确保每篇都值得阅读</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Sections -->
+        
+        <section class="mb-16 animate-fade-in" style="animation-delay: 0.3s">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-slate-900">AI综合</h2>
+                        <span class="bg-slate-100 text-slate-600 text-sm font-semibold px-3 py-1 rounded-full">
+                            29
+                        </span>
+                    </div>
+                    <div class="section-title-line mt-2 w-24"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://www.dropsitenews.com/p/israeli-soldiers-tel-sultan-gaza-red-crescent-civil-defense-massacre-report-forensic-architecture-earshot" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-24 20:16</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        IDF killed Gaza aid workers at point blank range in 2025 massacre: Report
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">1962</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.solidot.org/story?sid=83612" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-solidot text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Solidot
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 14:33</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        AI 总是在战争模拟游戏中推荐核打击
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Gemini</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">270</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://36kr.com/p/3697959369273217?f=rss" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-36kr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            36氪
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 00:02</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        8点1氪丨凌晨3点候补成功致千元车票作废，12306回应；油价迎来年内第三次上涨；大疆起诉美国联邦通信委员会
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">人工智能</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">260</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.solidot.org/story?sid=83603" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-solidot text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Solidot
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-24 13:47</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Anthropic 指控三家中国 AI 公司蒸馏数据训练模型
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">220</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://time.com/7380854/exclusive-anthropic-drops-flagship-safety-pledge/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 09:08</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Anthropic Drops Flagship Safety Pledge
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Anthropic</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">522</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://36kr.com/p/3679778295197314?f=rss" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-36kr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            36氪
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 00:00</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        2026医疗展望：百家公司港股排队，医疗板块能否再创「神话」
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">大模型</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">多模态</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">155</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://techcrunch.com/2026/02/25/about-12-of-u-s-teens-turn-to-ai-for-emotional-support-or-advice/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-techcrunch text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            TechCrunch
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 15:52</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        About 12% of U.S. teens turn to AI for emotional support or advice
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">ChatGPT</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">150</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://36kr.com/p/3698580039085698?f=rss" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-36kr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            36氪
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 10:37</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        氪星晚报｜英特尔与SambaNova达成多年战略合作；宗馥莉任浙江娃哈哈管理咨询公司董事；特斯拉指控法国饮料公司恶意抢注Cybercab商标
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">人工智能</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">融资</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">120</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://36kr.com/p/3698417555976071?f=rss" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-36kr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            36氪
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 07:51</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        八年积淀，中国人工智能迎来自主的世界级学术主场WAICA
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">人工智能</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">模型</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">120</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.nytimes.com/2026/02/24/business/irs-meta-corporate-taxes.html" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-24 20:58</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        IRS Tactics Against Meta Open a New Front in the Corporate Tax Fight
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Meta</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">216</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://techcrunch.com/2026/02/24/india-ai-boom-pushes-firms-to-trade-near-term-revenue-for-users/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-techcrunch text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            TechCrunch
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 02:00</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        India’s AI boom pushes firms to trade near-term revenue for users
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">ChatGPT</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.qbitai.com/2026/02/382015.html" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-qbitai text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            量子位
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 05:01</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        清华数学系大神跳槽OpenAI！曾主导SAM与Llama开发，Sora负责人：欢迎加入
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.infoq.cn/article/cLoHrUKOT9cl0Kpb5v9e?utm_source=rss&utm_medium=article" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-infoq text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            InfoQ
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 16:33</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        印度一大学买宇树机器狗冒充自研，被扒后坦白；智谱致歉并宣布补偿，《镖人》用 Seedance 2.0 做片尾彩蛋；OpenAI 算力狂想退烧｜AI周报
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.infoq.cn/article/FY23oig4JWbb6zC0iTEe?utm_source=rss&utm_medium=article" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-infoq text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            InfoQ
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 12:33</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        全行业盯了两年的编程能力榜，今天退役！OpenAI 停用 SWE-bench Verified：未来标准将看 AI 能顶替多少程序员？
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.ifanr.com/1655804?utm_source=rss&utm_medium=rss&utm_campaign=" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-ifanr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            爱范儿
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 12:27</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        让 Anthropic 破防的「蒸馏」风波，美国 AI 大牛泼冷水：中国 AI 成功不靠走捷径
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Anthropic</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="mb-16 animate-fade-in" style="animation-delay: 0.4s">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17.25 6.75 22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3-4.5 16.5"/></svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-slate-900">开源项目</h2>
+                        <span class="bg-slate-100 text-slate-600 text-sm font-semibold px-3 py-1 rounded-full">
+                            10
+                        </span>
+                    </div>
+                    <div class="section-title-line mt-2 w-24"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://github.com/CraftyGeezer/Kalshi-Polymarket-Ai-bot" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [AI] CraftyGeezer/Kalshi-Polymarket-Ai-bot: None
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">680</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/kevinho/clawfeed" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [AI] kevinho/clawfeed: ClawFeed — AI-powered news digest with structured summaries from Twitter/RSS feeds and web dashboard
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">676</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/ochyai/vibe-local" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [AI] ochyai/vibe-local: Free AI coding environment: Ollama + Python
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">450</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/vava-nessa/free-coding-models" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [AI] vava-nessa/free-coding-models: Find the fastest coding LLM models in seconds
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">339</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/Chrissotino/swiss-ai-call-agent" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [AI] Chrissotino/swiss-ai-call-agent: Enterprise-grade AI Call Agent for the Swiss market – inbound & outbound calls, multilingual (DE/FR/IT), MCP architecture, Claude AI decision engine, real-time dashboard
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">282</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/sangrokjung/claude-forge" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [LLM] sangrokjung/claude-forge: oh-my-zsh for Claude Code — 11 agents, 36 commands, 15 skills, 6-layer security hooks. Install in 5 min, update with git pull.
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">241</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/originalankur/GenerateAgents.md" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [LLM] originalankur/GenerateAgents.md: Automated generation of comprehensive Agents.md for LLMs, driven by the DSPy Recursive language model implementation.
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">167</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/nguyenduchoai/bizclaw" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [LLM] nguyenduchoai/bizclaw: BizClaw là nền tảng AI Agent kiến trúc trait-driven, có thể chạy mọi nơi — từ Raspberry Pi đến cloud server. Hỗ trợ nhiều LLM provider, kênh giao tiếp, và công cụ thông qua kiến trúc thống nhất, hoán đổi được.
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">122</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/AlexAnys/awesome-openclaw-usecases-zh" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [LLM] AlexAnys/awesome-openclaw-usecases-zh: 🇨🇳 OpenClaw（AI 智能体）中文用例大全 | 29 个真实场景：自动化办公、内容创作、服务器运维、个人助理、知识管理 | 零基础新手友好 | Chinese guide for OpenClaw AI agent use cases
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">79</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://github.com/robertoshimizu/session-graph" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-github text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            GitHub Trending
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-26 00:57</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        [ChatGPT] robertoshimizu/session-graph: Turn your scattered AI coding sessions into a queryable knowledge graph. Multi-platform (Claude Code, ChatGPT, DeepSeek, Grok, Warp), W3C ontology, Wikidata entity linking, SPARQL.
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">ChatGPT</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">72</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="mb-16 animate-fade-in" style="animation-delay: 0.5s">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m3.75 13.5 10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75Z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-slate-900">大模型</h2>
+                        <span class="bg-slate-100 text-slate-600 text-sm font-semibold px-3 py-1 rounded-full">
+                            6
+                        </span>
+                    </div>
+                    <div class="section-title-line mt-2 w-24"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://www.infoq.cn/article/YTywvAOvAxu7kXeKP2y1?utm_source=rss&utm_medium=article" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-infoq text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            InfoQ
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 15:44</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        遭谷歌封禁，OpenClaw 创始人首次在 OpenAI 受访吐槽：Gemini 自信“100%能跑”，结果一试就崩
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Gemini</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">150</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.inceptionlabs.ai/blog/introducing-mercury-2" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 06:46</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Mercury 2: Fast reasoning LLM powered by diffusion
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">300</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.ifanr.com/1655572?utm_source=rss&utm_medium=rss&utm_campaign=" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-ifanr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            爱范儿
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-24 05:43</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        一夜蒸发 310 亿美元！Claude 新工具干翻 IBM 摇钱树，AI 正在「清零」人类工位
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://blog.codemine.be/posts/2026/20260222-be-quiet/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 17:05</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        LLM=True
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">181</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://www.jiqizhixin.com/articles/2026-02-25-6" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-jiqizhixin text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            机器之心
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 08:40</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        大语言模型真的会「推理」吗？一项系统性研究梳理 LLM 的结构性推理失败
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">LLM</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">模型</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">60</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://code.claude.com/docs/en/remote-control" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-hackernews text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Hacker News
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 07:22</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Claude Code Remote Control
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">50</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="mb-16 animate-fade-in" style="animation-delay: 0.6s">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 18 9 11.25l4.306 4.306a11.95 11.95 0 0 1 5.814-5.518l.473-.298m-11.4-5.96 3.93 3.93m0 0 3.93-3.93m-3.93 3.93V15"/></svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-slate-900">融资动态</h2>
+                        <span class="bg-slate-100 text-slate-600 text-sm font-semibold px-3 py-1 rounded-full">
+                            4
+                        </span>
+                    </div>
+                    <div class="section-title-line mt-2 w-24"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://www.infoq.cn/article/lzj8OxKCV6be53mt8SJB?utm_source=rss&utm_medium=article" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-infoq text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            InfoQ
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 16:42</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Meta、OpenAI 争抢收购 OpenClaw前夜，创始人曝艰难抉择：月入不到2万刀赔钱养项目，Offer拿到手软，对几十亿融资没兴趣
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">OpenAI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">融资</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">120</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://techcrunch.com/2026/02/24/nvidia-challenger-ai-chip-startup-matx-raised-500m/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-techcrunch text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            TechCrunch
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 00:45</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Nvidia challenger AI chip startup MatX raised $500M
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">startup</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">NVIDIA</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">90</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://techcrunch.com/2026/02/24/self-driving-tech-startup-wayve-raises-1-2b-from-nvidia-uber-and-three-automakers/" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-techcrunch text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            TechCrunch
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 00:37</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Self-driving tech startup Wayve raises $1.2B from Nvidia, Uber, and three automakers
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">startup</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">NVIDIA</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">80</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+                <a href="https://36kr.com/p/3698117482212997?f=rss" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-36kr text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            36氪
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-25 02:41</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        AI光伏领域粉体需求爆发，业绩持续增长，「新川电子」获近亿元pre-IPO轮融资 | 36氪首发
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">初创公司</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">融资</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-warm">
+                            <svg class="w-4 h-4" fill="#f59e0b" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-semibold">80</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <section class="mb-16 animate-fade-in" style="animation-delay: 0.7s">
+            <div class="flex items-center gap-4 mb-8">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center text-white shadow-lg">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z"/></svg>
+                </div>
+                <div class="flex-1">
+                    <div class="flex items-center gap-3">
+                        <h2 class="text-2xl font-bold text-slate-900">自然语言处理</h2>
+                        <span class="bg-slate-100 text-slate-600 text-sm font-semibold px-3 py-1 rounded-full">
+                            1
+                        </span>
+                    </div>
+                    <div class="section-title-line mt-2 w-24"></div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <a href="https://www.solidot.org/story?sid=83598" target="_blank" class="block bg-white rounded-2xl p-6 card-shadow border border-slate-100 group">
+                    <div class="flex items-start justify-between mb-4">
+                        <span class="badge-solidot text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+                            Solidot
+                        </span>
+                        <span class="text-xs text-slate-400">2026-02-24 07:12</span>
+                    </div>
+                    
+                    <h3 class="text-base font-semibold text-slate-800 leading-relaxed mb-4 group-hover:text-indigo-600 transition-colors duration-200">
+                        Ladybird 浏览器项目将在 AI 帮助下使用 Rust 语言
+                    </h3>
+                    
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">AI</span><span class="keyword-tag px-2.5 py-1 rounded-lg text-xs font-medium">Claude</span>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                        <div class="flex items-center gap-1.5 score-hot">
+                            <svg class="w-4 h-4" fill="#ef4444" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd"/></svg>
+                            <span class="font-bold">100</span>
+                        </div>
+                        
+                        <div class="flex items-center gap-1 text-indigo-600 text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                            <span>阅读</span>
+                            <div class="transform group-hover:translate-x-1 transition-transform"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"/></svg></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer class="mt-20 text-center text-slate-400 text-sm animate-fade-in" style="animation-delay: 0.5s">
+            <div class="flex items-center justify-center gap-4 mb-4">
+                <span class="w-8 h-px bg-slate-300"></span>
+                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-500 to-violet-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/></svg>
+                </div>
+                <span class="w-8 h-px bg-slate-300"></span>
+            </div>
+            <p class="mb-2">数据来源: Hacker News, GitHub Trending, TechCrunch, 机器之心, 量子位等</p>
+            <p>生成时间: 2026-02-26 00:57:54</p>
+        </footer>
+    </div>
+</body>
+</html>
